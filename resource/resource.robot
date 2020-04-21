@@ -28,5 +28,11 @@ Apresentar o nome do usuário
 Apresentar mensagem de alerta
     [Arguments]                   ${expect_message}
     Wait Until Page Contains      ${expect_message}
-    ${message}=                   Get WebElement                  class:alert
+    ${message}=                   Get WebElement                  class:alert-info
+    Should Contain                ${message.text}                 ${expect_message}
+
+Apresentar mensagem de erro
+    [Arguments]                   ${expect_message}
+    Wait Until Page Contains      ${expect_message}
+    ${message}=                   Get WebElement                  class:alert-danger
     Should Contain                ${message.text}                 ${expect_message}

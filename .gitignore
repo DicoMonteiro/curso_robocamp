@@ -1,1 +1,6 @@
 curso_robocampo/log/*
+curso_robocampo/log/
+
+*.png
+*.html
+*.xml

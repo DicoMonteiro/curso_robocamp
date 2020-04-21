@@ -24,22 +24,22 @@ Login com sucesso
 Login com senha inválida
     Dado que eu acesso a página de login
     Quando solicito submeto minhas credenciais de login "didico@ninjapixel.com" e senha "teste123"
-    Então visulizo uma mensagem de alerta "Usuário e/ou senha inválidos"
+    Então visulizo uma mensagem de erro "Usuário e/ou senha inválidos"
 
 Login com email inválido
     Dado que eu acesso a página de login
     Quando solicito submeto minhas credenciais de login "teste@ninjapixel.com" e senha "pwd123"
-    Então visulizo uma mensagem de alerta "Usuário e/ou senha inválidos"
+    Então visulizo uma mensagem de erro "Usuário e/ou senha inválidos"
 
-# Login com senha branco
-#     Dado que eu acesso a página de login
-#     Quando solicito submeto minhas credenciais de login "didico@ninjapixel.com" e senha ""
-#     Então visulizo uma mensagem de alerta
+Login com senha branco
+    Dado que eu acesso a página de login
+    Quando solicito submeto minhas credenciais de login "didico@ninjapixel.com" e senha ""
+    Então visulizo uma mensagem de alerta "Opps. Informe a sua senha!"
 
-# Login com email branco
-#     Dado que eu acesso a página de login
-#     Quando solicito submeto minhas credenciais de login "" e senha "pwd123"
-#     Então visulizo uma mensagem de alerta
+Login com email branco
+    Dado que eu acesso a página de login
+    Quando solicito submeto minhas credenciais de login "" e senha "pwd123"
+    Então visulizo uma mensagem de alerta "Opps. Informe o seu email!"
 
 
 *** Keywords ***
@@ -53,5 +53,7 @@ Então visualizo o nome do usuário "${nome}" no dashboard
     Apresentar o nome do usuário        ${nome}
 
 Então visulizo uma mensagem de alerta "${mensagem}"
-    # Sleep                                5
     Apresentar mensagem de alerta        ${mensagem}
+
+Então visulizo uma mensagem de erro "${mensagem}"
+    Apresentar mensagem de erro        ${mensagem}
