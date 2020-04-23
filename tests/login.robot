@@ -5,9 +5,10 @@ Documentation       Suite de testes para validar o login do sistema Pixel
 ...                 Quero me autenticar no sistema
 ...                 Para que eu possa gerenciar o catálogo de produtos
 
-Resource            ../resource/resource.robot
-Test Setup          Nova sessão
-Test Teardown       Encerrar sessão 
+Resource            ../resources/resource.robot
+# Resource            ../resource/pages/LoginPage.robot
+Test Setup          Open session
+Test Teardown       Close session
 
 
 # ATDD = (Desenvolvimento guiado por teste de aceitação)
@@ -22,38 +23,54 @@ Login com sucesso
     Então visualizo o nome do usuário "Adriano" no dashboard
 
 Login com senha inválida
-    Dado que eu acesso a página de login
-    Quando solicito submeto minhas credenciais de login "didico@ninjapixel.com" e senha "teste123"
-    Então visulizo uma mensagem de erro "Usuário e/ou senha inválidos"
+    [Template]    Tentativa de login
+    didico@ninjapixel.com    teste123    Usuário e/ou senha inválidos
+    # Dado que eu acesso a página de login
+    # Quando solicito submeto minhas credenciais de login "didico@ninjapixel.com" e senha "teste123"
+    # Então visulizo uma mensagem de erro "Usuário e/ou senha inválidos"
 
 Login com email inválido
-    Dado que eu acesso a página de login
-    Quando solicito submeto minhas credenciais de login "teste@ninjapixel.com" e senha "pwd123"
-    Então visulizo uma mensagem de erro "Usuário e/ou senha inválidos"
+    [Template]    Tentativa de login
+    teste@ninjapixel.com    pwd123    Usuário e/ou senha inválidos
+    # Dado que eu acesso a página de login
+    # Quando solicito submeto minhas credenciais de login "teste@ninjapixel.com" e senha "pwd123"
+    # Então visulizo uma mensagem de erro "Usuário e/ou senha inválidos"
 
 Login com senha branco
-    Dado que eu acesso a página de login
-    Quando solicito submeto minhas credenciais de login "didico@ninjapixel.com" e senha ""
-    Então visulizo uma mensagem de alerta "Opps. Informe a sua senha!"
+    [Template]    Tentativa de login
+    didico@ninjapixel.com    ${EMPTY}    Opps. Informe a sua senha!
+    # Dado que eu acesso a página de login
+    # Quando solicito submeto minhas credenciais de login "didico@ninjapixel.com" e senha "${EMPTY}"
+    # Então visulizo uma mensagem de alerta "Opps. Informe a sua senha!"
 
 Login com email branco
-    Dado que eu acesso a página de login
-    Quando solicito submeto minhas credenciais de login "" e senha "pwd123"
-    Então visulizo uma mensagem de alerta "Opps. Informe o seu email!"
+    [Template]    Tentativa de login
+    ${EMPTY}     pwd123    Opps. Informe o seu email!
+    # Dado que eu acesso a página de login
+    # Quando solicito submeto minhas credenciais de login "${EMPTY}" e senha "pwd123"
+    # Então visulizo uma mensagem de alerta "Opps. Informe o seu email!"
 
 
 *** Keywords ***
-Dado que eu acesso a página de login
-    Go To                             ${URL}/login
+Tentativa de login
+    [Arguments]      ${email}    ${senha}    ${mensagem}
 
-Quando solicito submeto minhas credenciais de login "${email}" e senha "${senha}"
-    Login with                        ${email}    ${senha}
+    Dado que eu acesso a página de login
+    Quando solicito submeto minhas credenciais de login "${email}" e senha "${senha}"
+    Então visulizo uma mensagem de alerta "${mensagem}"
 
-Então visualizo o nome do usuário "${nome}" no dashboard
-    Apresentar o nome do usuário        ${nome}
+# Dado que eu acesso a página de login
+#     Go To                             ${URL}/login
 
-Então visulizo uma mensagem de alerta "${mensagem}"
-    Apresentar mensagem de alerta        ${mensagem}
+# Quando solicito submeto minhas credenciais de login "${email}" e senha "${senha}"
+#     # LoginPage.Login with    ${email}    ${senha}
+#     Login with    ${email}    ${senha}
 
-Então visulizo uma mensagem de erro "${mensagem}"
-    Apresentar mensagem de erro        ${mensagem}
+# Então visualizo o nome do usuário "${nome}" no dashboard
+#     Apresentar o nome do usuário        ${nome}
+
+# Então visulizo uma mensagem de alerta "${mensagem}"
+#     Apresentar mensagem de alerta        ${mensagem}
+
+# Então visulizo uma mensagem de erro "${mensagem}"
+#     Apresentar mensagem de erro        ${mensagem}
