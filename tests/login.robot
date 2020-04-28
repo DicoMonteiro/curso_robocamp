@@ -5,7 +5,7 @@ Documentation       Suite de testes para validar o login do sistema Pixel
 ...                 Quero me autenticar no sistema
 ...                 Para que eu possa gerenciar o catálogo de produtos
 
-Resource            ../resources/resource.robot
+Resource            ../resources/actions.robot
 # Resource            ../resource/pages/LoginPage.robot
 Test Setup          Open session
 Test Teardown       Close session
@@ -18,11 +18,13 @@ Test Teardown       Close session
 
 *** Test Cases ***
 Login com sucesso
+    [tags]    smoke
     Dado que eu acesso a página de login
     Quando solicito submeto minhas credenciais de login "didico@ninjapixel.com" e senha "pwd123"
     Então visualizo o nome do usuário "Adriano" no dashboard
 
 Login com senha inválida
+    [tags]    smoke
     [Template]    Tentativa de login
     didico@ninjapixel.com    teste123    Usuário e/ou senha inválidos
     # Dado que eu acesso a página de login
@@ -30,6 +32,7 @@ Login com senha inválida
     # Então visulizo uma mensagem de erro "Usuário e/ou senha inválidos"
 
 Login com email inválido
+    [tags]    smoke
     [Template]    Tentativa de login
     teste@ninjapixel.com    pwd123    Usuário e/ou senha inválidos
     # Dado que eu acesso a página de login
@@ -37,6 +40,7 @@ Login com email inválido
     # Então visulizo uma mensagem de erro "Usuário e/ou senha inválidos"
 
 Login com senha branco
+    [tags]    smoke
     [Template]    Tentativa de login
     didico@ninjapixel.com    ${EMPTY}    Opps. Informe a sua senha!
     # Dado que eu acesso a página de login
@@ -44,6 +48,7 @@ Login com senha branco
     # Então visulizo uma mensagem de alerta "Opps. Informe a sua senha!"
 
 Login com email branco
+    [tags]    smoke
     [Template]    Tentativa de login
     ${EMPTY}     pwd123    Opps. Informe o seu email!
     # Dado que eu acesso a página de login
