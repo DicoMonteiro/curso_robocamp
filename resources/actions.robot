@@ -61,6 +61,7 @@ Quando solicito submeto minhas credenciais de login "${email}" e senha "${senha}
 Então visualizo o nome do usuário "${nome}" no dashboard
     # Wait Until Page Contains     ${nome}
     Wait Until Element Is Visible    ${LOGGED_USER}
+    Wait Until Element Contains      ${LOGGED_USER}    ${nome}
     Element Text Should Be           ${LOGGED_USER}    ${nome}
 
 Então visulizo uma mensagem de alerta "${mensagem}"
