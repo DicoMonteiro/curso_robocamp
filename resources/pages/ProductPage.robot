@@ -2,7 +2,6 @@
 Documentation    Este arquivo implementa as ações e elementos do Produto
 
 
-
 *** Keywords ***
 Create New Product
     [Arguments]    ${product_json}
@@ -10,7 +9,17 @@ Create New Product
     Click Element    class:product-add
     Input Text       css:input[name=title]    ${product_json['name']}
 
-    Select Category    ${product_json['cat']}
+    
+    Run keyword If    "${product_json['cat']}" != "EMPTY"    Select Category    ${product_json['cat']}
+    # ...    Run keyword If    Select Category    ${product_json['cat']}
+    Run keyword If    "${product_json['cat']}" == "EMPTY"    Run Keywords
+
+    # Select Category    ${product_json['cat']}
+
+    # ${categoria}=          Run Keyword    if     ${product_json['cat']} == "EMPTY"
+    # ...                    Condition select
+    # ...            ELSE    Select Category    ${product_json['cat']}      
+
     Input Text         css:input[name=price]     ${product_json['price']}
 
     Input Producers    ${product_json['producers']}
@@ -27,13 +36,18 @@ Upload Photo
     ${file}        Set Variable    ${EXECDIR}/resources/fixtures/images/${image}
     Choose File    id:upcover      ${file}
 
+# Condition select
+#     Press Keys        css:input[placeholder=Gategoria]    TAB
+
 Select Category
     [Arguments]    ${cat}
 
-    Click Element    css:input[placeholder=Gategoria]
+    Click Element     css:input[placeholder=Gategoria]
 
+    Set Selenium Speed        1
     Wait Until Element Is Visible    class:el-select-dropdown__list
     Click Element                    xpath://li/span[text()='${cat}']
+    Set Selenium Speed        0
 
 Input Producers
     [Arguments]    ${producers}

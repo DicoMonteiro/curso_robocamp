@@ -8,8 +8,14 @@ Resource             ../resources/actions.robot
 
 # Library              OperatingSystem  
 
-Test Setup           Open session
-Test Teardown        Close session
+Suite Setup           Login session
+Suite Teardown        Close session
+
+# Test Setup           Login session
+# Test Teardown        Close session
+
+
+Test Teardown         After Test
 
 
 # *** Variables ***
@@ -19,13 +25,40 @@ Test Teardown        Close session
 
 *** Test Cases ***
 Disponibilizar o produto
-    [tags]    smoke
-    Dado que eu estou logado
+    [tags]    teste
+    #  ### O step de Dado foi comentado porque o passo de realizar login foi implementada no Test Setup de Login session do BasePage
+    # Dado que eu estou logado
     # E que eu tenha um novo produto ${dk}
     # ...    Donkey Kong    Super Nintendo    49.99    Um jogo muito divertido
     # Quando eu faço o cadastro desse produto    ${dk}
-    Quando eu faço o cadastro desse produto      dk.json
+    Dado que eu tenho um novo produto    dk.json
+    Quando eu faço o cadastro desse produto
     Então visualizo este item no catálogo
+
+Produto duplicado
+    [tags]    smoke
+    # Dado que eu estou logado
+    Dado que eu tenho um novo produto    master.json
+    Mas este produto já foi cadastrado
+    Quando eu faço o cadastro desse produto
+    Então devo ver a mensagem de error   Oops - Este produto já foi cadastrado!
+
+Nome não informado
+    Dado que eu tenho um novo produto   alexkid.json
+    Quando eu faço o cadastro desse produto
+    Então devo ver a mensagem de alerta     Oops - Informe o nome do produto!
+
+Preço não informado
+    Dado que eu tenho um novo produto   shimobi.json
+    Quando eu faço o cadastro desse produto
+    Então devo ver a mensagem de alerta     Oops - Informe o preço também!
+
+Categoria não selecionada
+    [tags]    empty
+    Dado que eu tenho um novo produto   kidchamelon.json
+    Quando eu faço o cadastro desse produto
+    Então devo ver a mensagem de alerta     Oops - Selecione uma categoria!
+
 
 
 # *** Keywords ***

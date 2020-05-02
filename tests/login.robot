@@ -7,8 +7,13 @@ Documentation       Suite de testes para validar o login do sistema Pixel
 
 Resource            ../resources/actions.robot
 # Resource            ../resource/pages/LoginPage.robot
-Test Setup          Open session
-Test Teardown       Close session
+# Test Setup          Open session
+# Test Teardown       Close session
+
+Suite Setup           Open session
+Suite Teardown        Close session
+
+Test Teardown         After Test
 
 
 # ATDD = (Desenvolvimento guiado por teste de aceitação)
@@ -22,6 +27,8 @@ Login com sucesso
     Dado que eu acesso a página de login
     Quando solicito submeto minhas credenciais de login "didico@ninjapixel.com" e senha "pwd123"
     Então visualizo o nome do usuário "Adriano" no dashboard
+
+    [Teardown]        After Test WCLS
 
 Login com senha inválida
     [tags]    smoke
