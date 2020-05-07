@@ -65,7 +65,8 @@ Resource    pages/GetProductPage.robot
 ## Login ###
 
 Dado que eu acesso a página de login
-    Go To    ${URL}/login
+    Go To    ${base_url}/login
+    # Open Chrome
 
 Quando solicito submeto minhas credenciais de login "${email}" e senha "${senha}"
     # LoginPage.Login with    ${email}    ${senha}
@@ -77,8 +78,19 @@ Então visualizo o nome do usuário "${nome}" no dashboard
     Wait Until Element Contains      ${LOGGED_USER}    ${nome}
     Element Text Should Be           ${LOGGED_USER}    ${nome}
 
-Então visulizo uma mensagem de alerta "${mensagem}"
-    Wait Until Element Contains    class:alert    ${mensagem}
+# Então visulizo uma mensagem de alerta "${mensagem}"
+#     Wait Until Element Contains    class:alert    ${mensagem}
+
+Então devo ver a mensagem de erro
+    [Arguments]        ${expect_message}
+    Wait Until Element Contains      ${ALERT_DANGER}    ${expect_message}
+    Element Text Should Be           ${ALERT_DANGER}    ${expect_message}
+    
+Então devo ver a mensagem informativa
+    [Arguments]        ${expect_message}
+    Wait Until Element Contains      ${ALERT_INFO}    ${expect_message}
+    Element Text Should Be           ${ALERT_INFO}    ${expect_message}
+
 
 
 ## Product ##
@@ -97,6 +109,7 @@ Dado que eu tenho um novo produto
     Set Test Variable     ${product_json}
 
 Mas este produto já foi cadastrado
+    Go To Product Form
     Create New Product    ${product_json}
 
 Quando eu faço o cadastro desse produto
@@ -106,26 +119,29 @@ Quando eu faço o cadastro desse produto
     # ${product_json}=    Evaluate    json.loads($product_file)          json
 
     # Remove Product By Name    ${product_json['name']}
+    Go To Product Form
 
     Create New Product    ${product_json}
     # Set Test Variable     ${product_json}
 
+Quando eu tento cadastrar o produto
+    Create New Product    ${product_json}
 
 Então visualizo este item no catálogo
     # Então no BDD é o Checkpoint
     Table Should Contain    class:table    ${product_json['name']}
 
-Então devo ver a mensagem de error
-    [Arguments]        ${expect_message}
-    Wait Until Element Contains      class:alert-danger    ${expect_message}
-    Element Text Should Be           class:alert-danger    ${expect_message}
-    Click Element                    ${CREATE}
+# Então devo ver a mensagem de erro
+#     [Arguments]        ${expect_message}
+#     Wait Until Element Contains      class:alert-danger    ${expect_message}
+#     Element Text Should Be           class:alert-danger    ${expect_message}
+#     Click Element                    ${CREATE}
     
-Então devo ver a mensagem de alerta
-    [Arguments]        ${expect_message}
-    Wait Until Element Contains      class:alert-info    ${expect_message}
-    Element Text Should Be           class:alert-info    ${expect_message}
-    Click Element                    ${CREATE}
+# Então devo ver a mensagem informativa
+#     [Arguments]        ${expect_message}
+#     Wait Until Element Contains      class:alert-info    ${expect_message}
+#     Element Text Should Be           class:alert-info    ${expect_message}
+#     Click Element                    ${CREATE}
 
 
 ## Remover ##
@@ -137,7 +153,9 @@ Dado que eu tenho o produto "${file_name}" no catálogo
     ${product_json}=      Get Product Json        ${file_name}      
 
     Remove Product By Name    ${product_json['name']}
-    
+
+    Go To Product Form
+
     Create New Product    ${product_json}
 
     Set Test Variable     ${product_json}

@@ -10,8 +10,8 @@ Resource            ../resources/actions.robot
 # Test Setup          Open session
 # Test Teardown       Close session
 
-Suite Setup           Open session
-Suite Teardown        Close session
+Suite Setup           Open Session
+Suite Teardown        Close Session
 
 Test Teardown         After Test
 
@@ -32,7 +32,7 @@ Login com sucesso
 
 Login com senha inválida
     [tags]    smoke
-    [Template]    Tentativa de login
+    [Template]    Tentativa de login com mensagem de erro
     didico@ninjapixel.com    teste123    Usuário e/ou senha inválidos
     # Dado que eu acesso a página de login
     # Quando solicito submeto minhas credenciais de login "didico@ninjapixel.com" e senha "teste123"
@@ -40,7 +40,7 @@ Login com senha inválida
 
 Login com email inválido
     [tags]    smoke
-    [Template]    Tentativa de login
+    [Template]    Tentativa de login com mensagem de erro
     teste@ninjapixel.com    pwd123    Usuário e/ou senha inválidos
     # Dado que eu acesso a página de login
     # Quando solicito submeto minhas credenciais de login "teste@ninjapixel.com" e senha "pwd123"
@@ -48,7 +48,7 @@ Login com email inválido
 
 Login com senha branco
     [tags]    smoke
-    [Template]    Tentativa de login
+    [Template]    Tentativa de login com mensagem informativa
     didico@ninjapixel.com    ${EMPTY}    Opps. Informe a sua senha!
     # Dado que eu acesso a página de login
     # Quando solicito submeto minhas credenciais de login "didico@ninjapixel.com" e senha "${EMPTY}"
@@ -56,7 +56,7 @@ Login com senha branco
 
 Login com email branco
     [tags]    smoke
-    [Template]    Tentativa de login
+    [Template]    Tentativa de login com mensagem informativa
     ${EMPTY}     pwd123    Opps. Informe o seu email!
     # Dado que eu acesso a página de login
     # Quando solicito submeto minhas credenciais de login "${EMPTY}" e senha "pwd123"
@@ -64,12 +64,20 @@ Login com email branco
 
 
 *** Keywords ***
-Tentativa de login
+Tentativa de login com mensagem de erro
     [Arguments]      ${email}    ${senha}    ${mensagem}
 
     Dado que eu acesso a página de login
     Quando solicito submeto minhas credenciais de login "${email}" e senha "${senha}"
-    Então visulizo uma mensagem de alerta "${mensagem}"
+    Então devo ver a mensagem de erro     ${mensagem}
+
+Tentativa de login com mensagem informativa
+    [Arguments]      ${email}    ${senha}    ${mensagem}
+
+    Dado que eu acesso a página de login
+    Quando solicito submeto minhas credenciais de login "${email}" e senha "${senha}"
+    Então devo ver a mensagem informativa     ${mensagem}
+
 
 # Dado que eu acesso a página de login
 #     Go To                             ${URL}/login

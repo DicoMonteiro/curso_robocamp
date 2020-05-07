@@ -41,27 +41,41 @@ Produto duplicado
     Dado que eu tenho um novo produto    master.json
     Mas este produto já foi cadastrado
     Quando eu faço o cadastro desse produto
-    Então devo ver a mensagem de error   Oops - Este produto já foi cadastrado!
+    Então devo ver a mensagem de erro   Oops - Este produto já foi cadastrado!
 
-Nome não informado
-    Dado que eu tenho um novo produto   alexkid.json
-    Quando eu faço o cadastro desse produto
-    Então devo ver a mensagem de alerta     Oops - Informe o nome do produto!
+# Nome não informado
+#     [tags]    no_name
+#     [Template]       Tentativa de cadastro
+#     streetf2.json    Oops - Informe o nome do produto!
+#     # Dado que eu tenho um novo produto   alexkid.json
+#     # Quando eu faço o cadastro desse produto
+#     # Então devo ver a mensagem de alerta     Oops - Informe o nome do produto!
 
-Preço não informado
-    Dado que eu tenho um novo produto   shimobi.json
-    Quando eu faço o cadastro desse produto
-    Então devo ver a mensagem de alerta     Oops - Informe o preço também!
+# Preço não informado
+#     [tags]    no_price
+#     [Template]      Tentativa de cadastro
+#     shimobi.json    Oops - Informe o preço também!    
+#     # Dado que eu tenho um novo produto   shimobi.json
+#     # Quando eu faço o cadastro desse produto
+#     # Então devo ver a mensagem de alerta     Oops - Informe o preço também!
 
-Categoria não selecionada
-    [tags]    empty
-    Dado que eu tenho um novo produto   kidchamelon.json
-    Quando eu faço o cadastro desse produto
-    Então devo ver a mensagem de alerta     Oops - Selecione uma categoria!
+# Categoria não selecionada
+#     [tags]    no_cat
+#     [Template]          Tentativa de cadastro
+#     kidchamelon.json    Oops - Selecione uma categoria!
+#     # Dado que eu tenho um novo produto   kidchamelon.json
+#     # Quando eu faço o cadastro desse produto
+#     # Então devo ver a mensagem de alerta     Oops - Selecione uma categoria!
 
 
 
 # *** Keywords ***
+# Tentativa de cadastro
+#     [Arguments]    ${file_name}        ${message}
+#     Dado que eu tenho um novo produto   ${file_name}
+#     Quando eu faço o cadastro desse produto
+#     Então devo ver a mensagem informativa     ${message}
+
 # Dado que eu estou logado
 #     # LoginPage.Login with    didico@ninjapixel.com    pwd123
 #     Login with    didico@ninjapixel.com    pwd123

@@ -3,18 +3,26 @@ Documentation    Este arquivo implementa as ações e elementos do Produto
 
 
 *** Keywords ***
+Go To Product Form
+    Wait Until Element Is Visible    class:product-add
+    Click Element    class:product-add
+
 Create New Product
     [Arguments]    ${product_json}
 
-    Click Element    class:product-add
+    # Click Element    class:product-add
     Input Text       css:input[name=title]    ${product_json['name']}
 
-    
-    Run keyword If    "${product_json['cat']}" != "EMPTY"    Select Category    ${product_json['cat']}
-    # ...    Run keyword If    Select Category    ${product_json['cat']}
-    Run keyword If    "${product_json['cat']}" == "EMPTY"    Run Keywords
 
-    # Select Category    ${product_json['cat']}
+    # Foi estruturado para a condição de executar um determinado ação, se for diferente e outro se for igual 
+    # Run keyword If    "${product_json['cat']}" != "EMPTY"    Select Category    ${product_json['cat']}
+    # ...    Run keyword If    Select Category    ${product_json['cat']}
+    # Run keyword If    "${product_json['cat']}" == "EMPTY"    Run Keywords
+
+    # Com esse implementação fica mais fácil de compreencer, que a primeira linha verifica se contem algo, 
+    # não contendo, ele não executa o Select Category, se existir algum valor, ele executa o Select Category
+    Run keyword If    "${product_json['cat']}"
+    ...    Select Category    ${product_json['cat']}
 
     # ${categoria}=          Run Keyword    if     ${product_json['cat']} == "EMPTY"
     # ...                    Condition select
@@ -25,7 +33,9 @@ Create New Product
     Input Producers    ${product_json['producers']}
     Input Text         css:textarea[name=description]    ${product_json['desc']}
 
-    Upload Photo    ${product_json['image']}
+    # Utilizando essa keyword o upload somente é executado se existir algum valor na variavel
+    Run Keyword If    "${product_json['image']}"
+    ...    Upload Photo    ${product_json['image']}
 
     Click Element    id:create-product
 

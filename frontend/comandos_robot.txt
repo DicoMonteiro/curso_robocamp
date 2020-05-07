@@ -26,6 +26,14 @@ robot -d ./<nome_da_pasta> <nome_da_pasta>\
 Ex: robot -d ./log tests\
 
 
+
+
+## Testando API
+
+
+https://github.com/MarketSquare/robotframework-requests#readme
+
+
 ### Comando de execução de cenários passando variáveis
 
 Ex: robot -d ./log  -v lang:en tests/teste_language.robot
