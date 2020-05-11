@@ -9,13 +9,15 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Baixando as depedências do projeto'
-                sh 'pip install -r backend/requirements.txt'
+                sh 'mkdir /backend'
+                sh 'cd backend'
+                sh 'pip install -r requirements.txt'
             } 
         }
         stage('Tests') {
             steps {
                 echo 'Executando testes de regressão'
-                sh 'robot -d ./logs backend/tests/'
+                sh 'robot -d ./logs tests/'
             }
             post {
                 always {
