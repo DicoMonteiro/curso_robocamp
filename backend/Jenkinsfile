@@ -9,7 +9,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Baixando as depedências do projeto'
-                sh 'mkdir /backend'
+                sh 'RUN mkdir /backend'
                 sh 'cd backend'
                 sh 'pip install -r backend/requirements.txt'
             } 
@@ -17,6 +17,7 @@ pipeline {
         stage('Tests') {
             steps {
                 echo 'Executando testes de regressão'
+                sh 'COPY '
                 sh 'robot -d ./logs backend/tests/'
             }
             post {
