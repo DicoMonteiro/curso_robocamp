@@ -10,7 +10,7 @@ pipeline {
             steps {
                 echo 'Baixando as depedências do projeto'
                 sh 'RUN mkdir /backend'
-                sh 'cd backend'
+                sh 'cd /backend'
                 sh 'pip install -r backend/requirements.txt'
             } 
         }
